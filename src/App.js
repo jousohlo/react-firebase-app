@@ -35,17 +35,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-          <form onSubmit={this.addMessage}>
-            <input type="text" ref={ el => this.inputEl = el } />
-            <input type="submit" value="Tallenna"/>
-            <ul>
-              { //Render the list of messages
-                this.state.messages.map( message => <li key={message.id}>{message.text}</li> )
-              }
-            </ul>
-          </form>
-        <p><button onClick = {this.clearMessages}>Clear</button></p>
+      <div className='page'>
+        <form onSubmit={this.addMessage}>
+          <input type="text" ref={ el => this.inputEl = el } />
+          <input type="submit" value="Tallenna"/>
+        </form>
+        <div className='section'>
+          <ul>
+            { //Render the list of messages
+              this.state.messages.map( message => <li key={message.id}>{message.text}</li> )
+            }
+          </ul>
+        </div>
+        <button onClick = {this.clearMessages}>Tyhjennä</button>
       </div>
     );
   }

@@ -1,24 +1,73 @@
-.App {
-  text-align: center;
+.page {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  padding: 16px 32px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+ul {
+  list-style: circle;
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+button, input[type=submit] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 400px) {
+  * {
+    font-size: 25px;
+  }
+  body {
+    background-color: #F09A9D; /* Red */  
+  }
+  button, input[type=submit] {
+    width: 100%;
+  }
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+  body {
+    background-color: #F5CF8E; /* Yellow */
+  }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+  body {
+    background-color: #B2D6FF; /* Blue */
+  }
+}
+
