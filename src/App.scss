@@ -1,0 +1,83 @@
+$mobile-font: 25px;
+$other-font: 12px;
+
+
+* {
+  font-size: $mobile-font;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+.page {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  margin: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 2px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+}
+
+button, input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  margin: 4px 2px;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 400px) {
+  body {
+    background-color: #a3b3ce; /* Red */  
+  }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+  body {
+    background-color: #F5CF8E; /* Yellow */
+  }
+  * {
+    font-size: $other-font;
+  }
+
+  input[type=submit] {
+    width: 50%;
+  }
+  button {
+    width: 20%;
+  }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+  body {
+    background-color: #B2D6FF; /* Blue */
+  }
+  * {
+    font-size: $other-font;
+  }
+  input[type=submit] {
+    width: 50%;
+  }
+  button {
+    width: 20%;
+  }
+}
+
