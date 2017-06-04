@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
     this.state = { 
       messages: [],
-      signedIn: 'Kirjaudu'
+      signedIn: false,
+      user: ''
       }; // <- set up react state
   }
 
@@ -17,7 +18,9 @@ class App extends Component {
     console.log('componentWillMount');
     fire.auth().onAuthStateChanged(user => {
       if (user !== null) {
-        this.setState({signedIn: 'Kirjautunut: ' + user.displayName});
+        this.setState({
+          signedIn: true,
+          user: user.displayName});
       }
     });
     /* Create reference to messages in Firebase Database */
@@ -47,7 +50,7 @@ class App extends Component {
   authenticate() {
     var provider = new firebase.auth.GoogleAuthProvider();
     fire.auth().signInWithRedirect(provider);
-    fire.auth().getRedirectResult().then(function(result) {
+    fire.auth().getRedirectResult().then(result => {
       if (result.credential) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
@@ -68,12 +71,28 @@ class App extends Component {
     });
   } 
 
+  signOut() {
+    fire.auth().signOut().then(()=>{
+      this.setState({
+        messages: [],
+        signedIn: false})
+    });
+  }
+
   render() {
+    let authButton = null;
+    let buttonText = 'Sign in';
+    if (!this.state.signedIn) {
+      authButton = <AuthenticationButton authenticate={this.authenticate.bind(this)} buttonText={buttonText}/>;
+    } else {
+      let buttonText = 'Sign out: ' + this.state.user;
+      authButton = <AuthenticationButton authenticate={this.signOut.bind(this)} buttonText={buttonText}/>;
+    }
     return (
       <div className='page'>
         <form onSubmit={this.addMessage.bind(this)}>
           <input type="text" ref={ el => this.inputEl = el } />
-          <input type="submit" value="Tallenna"/>
+          <input type="submit" value="Save"/>
         </form>
         <div className='section'>
           <ul>
@@ -82,9 +101,21 @@ class App extends Component {
             }
           </ul>
         </div>
-        <button onClick = {this.clearMessages.bind(this)}>Tyhjennä</button>
-        <button onClick = {this.authenticate.bind(this)}>{this.state.signedIn}</button>
+        <button onClick = {this.clearMessages.bind(this)}>Clear</button>
+        {authButton}
       </div>
+    );
+  }
+}
+
+class AuthenticationButton extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return(
+       <button onClick = {this.props.authenticate}>{this.props.buttonText}</button> 
     );
   }
 }
