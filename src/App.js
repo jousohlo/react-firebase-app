@@ -58,7 +58,7 @@ class App extends Component {
       }
       // The signed-in user info.
       //var user = result.user;
-    }).catch(function(error) {
+    }).catch(error => {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -80,13 +80,13 @@ class App extends Component {
   }
 
   render() {
-    let authButton = null;
+    let authButton;
     let buttonText = 'Sign in';
     if (!this.state.signedIn) {
-      authButton = <AuthenticationButton authenticate={this.authenticate.bind(this)} buttonText={buttonText}/>;
+      authButton = (<AuthenticationButton authenticate={this.authenticate.bind(this)} buttonText={buttonText}/>);
     } else {
       let buttonText = 'Sign out: ' + this.state.user;
-      authButton = <AuthenticationButton authenticate={this.signOut.bind(this)} buttonText={buttonText}/>;
+      authButton = (<AuthenticationButton authenticate={this.signOut.bind(this)} buttonText={buttonText}/>);
     }
     return (
       <div className='page'>
