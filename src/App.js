@@ -95,17 +95,39 @@ class App extends Component {
           <input type="submit" value="Save"/>
         </form>
         <div className='section'>
-          <ul>
-            { //Render the list of messages
-              this.state.messages.map( message => <li key={message.id}>{message.text}</li> )
-            }
-          </ul>
+          <List messages={this.state.messages}></List>
         </div>
         <button onClick = {this.clearMessages.bind(this)}>Clear</button>
         {authButton}
       </div>
     );
   }
+}
+
+class List extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return(
+      <ul>
+      {//Render the list of messages
+        this.props.messages.map( message => <ListItem message={message}></ListItem> )
+      }
+      </ul>
+    )
+  };
+}
+
+class ListItem extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return(
+      <li data-id={this.props.message.id}>{this.props.    message.text}</li> 
+    )
+  };
 }
 
 class AuthenticationButton extends Component {
