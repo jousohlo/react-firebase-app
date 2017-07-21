@@ -31,7 +31,13 @@ class App extends Component {
       this.setState({ messages: [message].concat(this.state.messages) });
     })
     messagesRef.on('child_removed', snapshot => {
-      this.setState({ messages: [] });
+      var messages = this.state.messages;
+      messages.forEach(elem => {
+        if (elem.id === snapshot.key) {
+          messages.splice(messages.indexOf(elem),1);
+        }
+      })
+      this.setState({messages: messages});
     })
   }
 
@@ -45,6 +51,11 @@ class App extends Component {
   clearMessages(){
     fire.database().ref('messages').set( null );
     this.setState({ messages: [] });
+  }
+
+  deleteMessage(e, id) {
+    e.preventDefault();
+    fire.database().ref('messages/' + id).remove();
   }
 
   authenticate() {
@@ -95,7 +106,7 @@ class App extends Component {
           <input type="submit" value="Save"/>
         </form>
         <div className='section'>
-          <List messages={this.state.messages}></List>
+          <List removeItem={this.deleteMessage.bind(this)} messages={this.state.messages}></List>
         </div>
         <button onClick = {this.clearMessages.bind(this)}>Clear</button>
         {authButton}
@@ -112,7 +123,7 @@ class List extends Component {
     return(
       <ul>
       {//Render the list of messages
-        this.props.messages.map( message => <ListItem message={message}></ListItem> )
+        this.props.messages.map( message => <ListItem key={message.id} removeItem={this.props.removeItem} message={message}></ListItem> )
       }
       </ul>
     )
@@ -125,7 +136,7 @@ class ListItem extends Component {
   }
   render() {
     return(
-      <li data-id={this.props.message.id}>{this.props.    message.text}</li> 
+      <li data-id={this.props.message.id} onClick={e => this.props.removeItem(e,this.props.message.id)}>{this.props.message.text}</li> 
     )
   };
 }
